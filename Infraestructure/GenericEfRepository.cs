@@ -6,8 +6,6 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infraestructure
 {
-   
-
     public class GenericEfRepository<T> : IAsyncRepository<T> where T : class
     {
         protected readonly AzureFunctionsDbContext _context;
