@@ -34,6 +34,11 @@ namespace Infraestructure
             return await _context.Set<T>().FindAsync(Id);
         }
 
+        public async Task<T> FindByLoginAsync(T  entity)
+        {
+            return await _context.Set<T>().FindAsync(entity);
+        }
+
         public async Task<IReadOnlyList<T>> ListAsync(Guid Id)
         {
             return await _context.Set<T>().ToListAsync();
@@ -46,7 +51,6 @@ namespace Infraestructure
             await SaveAsync();
             return entity;
         }
-
 
         private async Task SaveAsync()
         {

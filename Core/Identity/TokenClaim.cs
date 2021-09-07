@@ -1,5 +1,7 @@
 using Core.Entities;
+using Core.Interfaces;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -11,20 +13,25 @@ using System.Threading.Tasks;
 
 namespace Core.Services
 {
-    public class TokenClaim 
+  
+
+    public class TokenClaim : ITokenClaim
     {
         private readonly IConfiguration _configuration;
+        private readonly ILogger<TokenClaim> _logger;
 
-        public TokenClaim(IConfiguration configuration)
+        public TokenClaim(IConfiguration configuration, ILogger<TokenClaim> logger)
         {
             _configuration = configuration;
+            _logger = logger;
         }
 
         public async Task<string> GetTokenClaims(User user)
         {
-           var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_configuration["JwtOptions:JwtSecret"]);
             var claims = new List<Claim>();
+            _logger.LogInformation("Create auth token application");
 
             foreach (PropertyInfo prop in user.GetType().GetProperties())
             {

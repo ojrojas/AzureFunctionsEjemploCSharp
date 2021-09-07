@@ -9,6 +9,7 @@ namespace Core.Interfaces
         Task<T> CreateAsync(T entity);
         Task<T> DeleteAsync(Guid Id, T entity);
         Task<T> FindByIdAsync(Guid Id);
+        Task<T> FindByLoginAsync(T entity);
         Task<IReadOnlyList<T>> ListAsync(Guid Id);
         Task<T> UpdateAsync(T entity);
     }

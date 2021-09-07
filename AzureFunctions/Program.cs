@@ -2,6 +2,10 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Azure.Functions.Worker.Configuration;
+using AzureFunctions.Extensions;
+using Microsoft.Extensions.DependencyInjection;
+using Infraestructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace AzureFunctions
 {
@@ -11,6 +15,10 @@ namespace AzureFunctions
         {
             var host = new HostBuilder()
                 .ConfigureFunctionsWorkerDefaults()
+                .ConfigureServices(services => {
+                    services.AddDbContext<AzureFunctionsDbContext>(options => options.UseSqlite("cadena de conexion"))
+                    .AddServiceExtensionDM();
+                })
                 .Build();
 
             host.Run();
