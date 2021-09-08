@@ -13,15 +13,17 @@ namespace AzureFunctions
     {
         public static void Main()
         {
-            var host = new HostBuilder()
+            IConfiguration configuracion = default;
+            var host = new HostBuilder();
+            host
                 .ConfigureFunctionsWorkerDefaults()
-                .ConfigureServices(services => {
-                    services.AddDbContext<AzureFunctionsDbContext>(options => options.UseSqlite("cadena de conexion"))
+                .ConfigureServices(services =>
+                {
+                    services.AddDbContext<AzureFunctionsDbContext>(
+                        options => options.UseSqlite(configuracion.GetConnectionString("ConnectionSqlite")))
                     .AddServiceExtensionDM();
                 })
-                .Build();
-
-            host.Run();
+                .Build().Run();
         }
     }
 }

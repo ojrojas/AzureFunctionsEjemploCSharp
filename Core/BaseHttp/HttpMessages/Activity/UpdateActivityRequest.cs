@@ -1,9 +1,8 @@
 using System;
-using Core.Entities;
 
-namespace Core.Dtos
+namespace Core.BaseHttp.HttpMessages.Activity
 {
-    public class ActivityDto : BaseEntity
+    public class UpdateActivityRequest : RequestMessage
     {
         public string Name { get; set; }
         public DateTime EndDate { get; set; }
