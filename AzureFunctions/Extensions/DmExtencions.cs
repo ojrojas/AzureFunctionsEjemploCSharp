@@ -17,8 +17,6 @@ namespace AzureFunctions.Extensions
             services.AddScoped<ILoginService,LoginService>();
             services.AddScoped<IActivityService, ActivityService>();
             services.AddScoped<IUserService, UserService>();
-
-
             return services;
         } 
     }
