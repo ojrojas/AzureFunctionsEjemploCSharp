@@ -6,8 +6,6 @@ namespace Infraestructure
 {
     public class AzureFunctionsDbContext : DbContext
     {
-        private readonly IConfiguration _configuration;
-
         public AzureFunctionsDbContext() {}
 
         public DbSet<User> Users { get; set; }
