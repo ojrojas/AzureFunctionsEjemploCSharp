@@ -1,11 +1,6 @@
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Azure.Functions.Worker.Configuration;
 using AzureFunctions.Extensions;
 using Microsoft.Extensions.DependencyInjection;
-using Infraestructure;
-using Microsoft.EntityFrameworkCore;
 
 namespace AzureFunctions
 {
@@ -15,12 +10,14 @@ namespace AzureFunctions
         {
             var host = new HostBuilder();
             host
-                .ConfigureFunctionsWorkerDefaults()
-                .ConfigureServices(services =>
+             .ConfigureServices(services =>
                 {
                    services
                     .AddServiceExtensionDM();
+                    services.BuildServiceProvider();
                 })
+                .ConfigureFunctionsWorkerDefaults()
+               
                 .Build().Run();
         }
     }

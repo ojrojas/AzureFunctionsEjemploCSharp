@@ -1,6 +1,7 @@
 using Core.Interfaces;
 using Core.Services;
 using Infraestructure;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AzureFunctions.Extensions

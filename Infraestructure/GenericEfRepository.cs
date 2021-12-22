@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Core.Entities;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infraestructure
 {
-    public class GenericEfRepository<T> : IAsyncRepository<T> where T : class
+    public class GenericEfRepository<T> : IAsyncRepository<T> where T : BaseEntity, IAggregateRoot
     {
         protected readonly AzureFunctionsDbContext _context;
 
-        public GenericEfRepository(AzureFunctionsDbContext context)
+        public GenericEfRepository()
         {
-            _context = context;
+            _context = new AzureFunctionsDbContext();
         }
 
         public async Task<T> CreateAsync(T entity)
@@ -34,12 +35,7 @@ namespace Infraestructure
             return await _context.Set<T>().FindAsync(Id);
         }
 
-        public async Task<T> FindByLoginAsync(T  entity)
-        {
-            return await _context.Set<T>().FindAsync(entity);
-        }
-
-        public async Task<IReadOnlyList<T>> ListAsync(Guid Id)
+        public async Task<IReadOnlyList<T>> ListAsync()
         {
             return await _context.Set<T>().ToListAsync();
         }

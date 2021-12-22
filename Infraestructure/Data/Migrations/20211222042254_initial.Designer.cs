@@ -9,38 +9,41 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infraestructure.Data.Migrations
 {
     [DbContext(typeof(AzureFunctionsDbContext))]
-    [Migration("20210908033257_initial")]
+    [Migration("20211222042254_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.9");
 
             modelBuilder.Entity("Core.Entities.Activity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<byte[]>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varbinary(16)");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("EndDate")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime");
 
-                    b.Property<Guid>("ModifiedBy")
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -49,33 +52,35 @@ namespace Infraestructure.Data.Migrations
 
             modelBuilder.Entity("Core.Entities.User", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<byte[]>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("varbinary(16)");
 
-                    b.Property<Guid>("CreatedBy")
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("LastName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
-                    b.Property<Guid>("ModifiedBy")
-                        .HasColumnType("TEXT");
+                    b.Property<byte[]>("ModifiedBy")
+                        .IsRequired()
+                        .HasColumnType("varbinary(16)");
 
                     b.Property<DateTime>("ModifiedOn")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("datetime");
 
                     b.Property<string>("Name")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Password")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("UserName")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 

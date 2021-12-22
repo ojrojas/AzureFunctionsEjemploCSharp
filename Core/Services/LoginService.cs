@@ -4,6 +4,7 @@ using Core.Entities;
 using Core.Interfaces;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Core.Services
 {
@@ -26,8 +27,9 @@ namespace Core.Services
         {
             _logger.LogInformation("Login Services", JsonConvert.SerializeObject(loginRequest));
             var response = new LoginResponse(loginRequest.CorrelationId);
-            var user = await _loginRepository.FindByLoginAsync(new User { UserName = loginRequest.UserName, Password = loginRequest.Password });
-            response.Token = user != null ? await _tokenClaim.GetTokenClaims(user) : string.Empty;
+            var users = await _loginRepository.ListAsync();
+            var userLogged = users.FirstOrDefault(x=> x.UserName == loginRequest.UserName && x.Password == loginRequest.Password);
+            response.Token = userLogged != null ? await _tokenClaim.GetTokenClaims(userLogged) : string.Empty;
             return response;
         }
     }
